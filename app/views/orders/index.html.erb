@@ -1,0 +1,31 @@
+<div class="conatiner">
+    <h1 class="text-center" style="padding:13px">Your orders</h1>
+    <div class="row justify-content-md-center">
+        <div class="col-sm-4">
+            <div id="accordion" role="tablist">
+                <% @orders.each do |order| %>
+                <div class="card">
+                    <div class="card-header" role="tab" id="<%= order.id%>">
+                        <h5 class="mb-0 text-center">
+                            <button class="btn btn-primary btn-block" data-toggle="collapse" href="#collapse<%= order.id %>" aria-expanded="true" aria-controls="collapse<%= order.id %>">
+                                    <%= order.updated_at.localtime.strftime('%b %e, %l:%M %p') %>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapse<%= order.id %>" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <% order.order_items.each do |order_item| %>
+                                    <li class="list-group-item"><%= order_item.menu_item.name %> Quantity: <%= order_item.quantity %> Price: $<%= order_item.total_price %></li>
+                                <% end %>
+                                <li class="list-group-item">Total: $<%= order.total %></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+</div>

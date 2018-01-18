@@ -1,0 +1,8 @@
+<div class="container">
+    <h1 class="text-center">Menus</h1>
+    <ul class="list-group">
+        <% @menus.each do |menu| %>
+            <li class="list-group-item text-center"><%= link_to  menu.name, menu_path(menu), class: "btn btn-primary btn-block" %></li>
+        <% end %>
+    </ul>
+</div>

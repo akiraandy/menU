@@ -1,0 +1,15 @@
+<% if !@order.order_items.empty? %>
+    <div id="order-form" class="container">
+        <ul class="list-group">
+            <% @order.order_items.each do |order_item| %>
+                <%= render "order_items/order_item", order_item: order_item %>
+            <% end %>
+            <li class="list-group-item">Order total: $<%= '%.2f' % @order.total %></li>
+            <%= form_for @order, url: user_order_path(current_user, @order) do |t| %>
+                <li class="list-group-item"><%= t.submit "Submit Order", class: "btn btn-primary" %></li>
+            <% end  %>
+        </ul>
+    </div>
+<% else %>
+    <p class="alert alert-primary">Add an item to your order to get started</p>
+<% end %>

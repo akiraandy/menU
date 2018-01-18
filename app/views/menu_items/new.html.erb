@@ -1,0 +1,47 @@
+<div class="container">
+    <h1 class="text-center">New menu item</h1>
+    <br>
+    <%= render 'shared/error', object: @menu_item %> 
+ 
+    <%= form_for @menu_item, url: {action: "create"} do |f| %>
+            <%= f.label :menus %>
+            <%= f.collection_select(:menus, Menu.all, :id, :name, {:prompt => "Select multiple menus with ctrl"}, {:multiple => true}) %>
+        <div class="form-group">
+        
+            <div class="form-group">
+                <%= f.label :category %>
+                <%= f.collection_select :category, Category.all, :id, :name, class:"form-control" %>
+            </div>
+        </div> 
+        
+        <%= f.fields_for :item do |item| %>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <%= item.check_box :daily_special_status, class: "form-check-input" %>
+                    Daily Special Active?
+                </label>
+            </div>
+
+            <div class="form-group">
+                <%= item.label :daily_special %>
+                <%= item.select :DotW, @days %>
+            </div>
+
+            <div class="form-group">
+                <%= item.label :name %>
+                <%= item.text_field :name, class:"form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= item.label :description %>
+                <%= item.text_area :description, class:"form-control" %>
+            </div>
+        
+            <div class="form-group">
+                <%= item.label :price %>
+                <%= item.number_field(:price, in: 1.0..100.0, step: 0.01, class:"form-control") %>
+            </div>
+        <% end %>
+        <%= f.submit "Create menu item", class: "btn btn-primary btn-lg btn-block" %>
+    <% end %>
+</div>

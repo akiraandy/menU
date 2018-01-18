@@ -1,0 +1,6 @@
+<% if @order.errors.any? %>
+    alert("not valid.")
+<% else %>
+  $("#order-list-final").html("<%= escape_javascript(render 'order_items/order_items_list_final') %>")
+  $("#order-list").html("<%= escape_javascript(render 'order_items/order_items_list') %>")
+<% end %>

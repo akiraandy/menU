@@ -1,0 +1,15 @@
+<li class="list-group-item">
+    <%= order_item.menu_item.name %> $<%= '%.2f' % order_item.total_price %>
+    <%= form_for( order_item, remote: true) do |f| %>
+        <div class="input-group">
+            <%= f.number_field :quantity, value: order_item.quantity.to_i, class: "form-control", min: 1 %>
+            <%= f.hidden_field :id, value: order_item.id %>
+            <span class="input-group-addon">
+                <%= f.submit "Update", class: "btn btn-primary" %>
+            </span>
+            <span class="input-group-addon" style="padding-left: 4px;">
+                <%= link_to "Delete", order_item_path(order_item), remote: true, method: :delete, data: {confirm: 'Are you sure?'},  class:"btn btn-danger"%>
+            </span>
+        </div>
+    <% end %>
+</li>

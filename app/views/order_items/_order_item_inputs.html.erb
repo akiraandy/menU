@@ -1,0 +1,14 @@
+<% if current_user %>
+    <div class="container">
+        <%= form_for( @order_item, remote: true) do |f| %>
+        <div class="input-group">
+            <%= f.number_field :quantity, value: @order_item.quantity.to_i, class: "form-control", min: 1 %>
+            <%= f.hidden_field :menu_item_id, value: menu_item.id %>
+            <%= f.hidden_field :unit_price, value: menu_item.price %>
+            <span class="input-group-addon"><%= f.submit "Add to order", disabled: menu_item.item.disabled?, class: button_status(menu_item.item) %></span>
+        </div>
+    <% end %>
+    <%= link_to "Edit", edit_menu_item_path(menu_item), class:"btn btn-secondary"%>
+    <%= link_to "Delete", menu_item_path(menu_item), method: :delete, data: {confirm: 'Are you sure?'},  class:"btn btn-danger"%>
+    </div>
+<% end %>

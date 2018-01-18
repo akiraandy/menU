@@ -1,0 +1,46 @@
+
+<% if !@menu.menu_items.empty? %>
+    <div class="container">        
+        <div class="row">
+            <div class="col">
+                <h4 class="text-center"><i class="material-icons" style="color:rgb(231, 200, 21);">star</i>: one of today's daily specials!</h4>
+                <h1 class="text-center"><%= @menu.name %></h1>
+                
+                <% @categories.each do |category| %>
+                <h2 class="text-center"  style="padding: 14px; border-bottom: 1px solid #eee;"><%= category.name.capitalize %></h2>
+                    <div class="row">
+                        <div class="card-deck">
+                            <% category.menu_items.each do |menu_item| %>
+                                <% if menu_item.active_status && menu_item.menus.include?(@menu) %>
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                                <% if menu_item.daily_special_status %>
+                                                    <p><%= @days.select{|name, num| num == menu_item.dotw }.flatten.first %> special </p><i class="material-icons" style="float:right;<%= active_star(menu_item.item)%>;">star</i>
+                                                <% end %>
+                                                <h4 class="card-title"><%= menu_item.name %></h4>
+                                                <p class="card-text"><%= menu_item.description %></p>
+                                                <p class="card-text">$<%= '%.2f' % menu_item.price %></p>
+                                                <%= render "order_items/order_item_inputs", menu_item: menu_item %>
+                                        </div>
+                                    </div>
+                                <% end %>
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <% if current_user %>
+                <div class="col-lg-3">
+                    <div id="order-info" class="text-center">
+                        <h1>Current order</h1>
+                        <div id="order-list">
+                            <%= render "order_items/order_items_list", order: @order %>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>   
+    <% else %>
+    <h2>There are no items for this menu!</h2>
+<% end %>
